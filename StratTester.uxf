@@ -14,6 +14,7 @@ condition2
 operator
 conditionAchieved(conditiion1,etc??)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>690</x><y>390</y><w>210</w><h>170</h></coordinates><panel_attributes>Strategy tester
 --
+Short
 Balance
 Strategy
 Trades list
