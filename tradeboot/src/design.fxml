@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller">
+   <children>
+      <VBox prefHeight="600.0" prefWidth="800.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ComboBox prefWidth="150.0" promptText="Time Zone">
+                     <HBox.margin>
+                        <Insets left="600.0" top="40.0" />
+                     </HBox.margin>
+                  </ComboBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="100.0" prefWidth="770.0">
+                     <children>
+                        <Label text="Buy kondition" />
+                        <HBox prefHeight="82.0" prefWidth="809.0">
+                           <children>
+                              <ComboBox prefWidth="150.0" promptText="Option" />
+                              <ComboBox prefWidth="150.0" promptText="&lt;,=,&gt;" />
+                              <ComboBox prefWidth="150.0" promptText="Option2" />
+                              <Label prefHeight="18.0" prefWidth="248.0" text="Balance" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="110.0" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="100.0" prefWidth="770.0">
+                     <children>
+                        <Label text="Sell kondition" />
+                        <HBox prefHeight="82.0" prefWidth="809.0">
+                           <children>
+                              <ComboBox prefWidth="150.0" promptText="Option" />
+                              <ComboBox prefWidth="150.0" promptText="&lt;,=,&gt;" />
+                              <ComboBox prefWidth="150.0" promptText="Option2" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="100.0" prefWidth="827.0">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Stop loss">
+                                 <HBox.margin>
+                                    <Insets top="60.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label id="Position Sizing" text="Stop loss">
+                                 <HBox.margin>
+                                    <Insets left="500.0" top="60.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="82.0" prefWidth="323.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="61.0" text="\$%" />
+                              <ComboBox prefWidth="150.0" promptText="Stock">
+                                 <HBox.margin>
+                                    <Insets left="150.0" />
+                                 </HBox.margin>
+                              </ComboBox>
+                              <Label id="\$,%" prefHeight="18.0" prefWidth="99.0" text="\$,%">
+                                 <HBox.margin>
+                                    <Insets left="200.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children></VBox>
+   </children>
+</AnchorPane>
