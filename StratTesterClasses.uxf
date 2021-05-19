@@ -1,0 +1,38 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>360</x><y>260</y><w>210</w><h>150</h></coordinates><panel_attributes>Strategy
+--
+ConditionBuy
+ConditionSell
+StopLoss
+PositionSizing
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>670</x><y>130</y><w>210</w><h>110</h></coordinates><panel_attributes>Condition
+--
+Type (buy/sell)
+condition1
+condition2
+operator
+conditionAchieved(conditiion1,etc??)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>690</x><y>390</y><w>210</w><h>170</h></coordinates><panel_attributes>Strategy tester
+--
+Balance
+Strategy
+Trades list
+OutstandingTrades
+
+CloseCheck(trade) Boolean 
+checks if sell condition is achieved
+Closes trade</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>280</x><y>480</y><w>240</w><h>190</h></coordinates><panel_attributes>Trade
+--
+BuyDate
+BuyPrice
+
+SoldDate
+SoldPrice
+
+Balance
+Win/Loss boolean
+Profit %
+Profit dollar
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>560</x><y>140</y><w>130</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;130;110;10</additional_attributes></element><element><id>Relation</id><coordinates><x>560</x><y>400</y><w>150</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>130;20;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>510</x><y>480</y><w>200</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>180;10;10;70</additional_attributes></element></diagram>
