@@ -1,2 +1,2 @@
 # Trade-bot
-trade bot
+trade bot Strategy Tester
