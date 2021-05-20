@@ -1,6 +1,12 @@
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+
+import java.util.SimpleTimeZone;
+import java.util.TimeZone;
 
 
 public class controller{
@@ -27,4 +33,19 @@ public class controller{
     @FXML
     Label stoploos;
 
-}
+    ObservableList<String> timezonearray = FXCollections.observableArrayList();
+    public void initialize() {
+    AddTimeZone();
+    Timezonemenu.getItems().addAll(timezonearray);
+
+    }
+
+    public void AddTimeZone(){
+        for (int i = 0; i < TimeZone.getAvailableIDs().length; i++) {
+            timezonearray.add(TimeZone.getAvailableIDs()[i]);
+        }
+    }
+
+
+
+    }

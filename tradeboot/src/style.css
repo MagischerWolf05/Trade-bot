@@ -1,3 +1,7 @@
 .root{
     -fx-background-color: #f3f2f1;
 }
+.combo-box{
+    -fx-border-width: 2px;
+    -fx-border-color: black;
+}
