@@ -31,6 +31,15 @@ public class controller{
     @FXML
     Label stoploos;
 
+    String valuetimezone = "";
+    String valuebuyoption1 = "";
+    String valuebuyoperator = "";
+    String valuebuyoption2 = "";
+    String valueselloption1 = "";
+    String valueselloperator = "";
+    String valueselloption2 = "";
+    // ComboBox stock;
+
     ObservableList<String> timezonearray = FXCollections.observableArrayList();
     ObservableList<String> optionarray = FXCollections.observableArrayList();
     ObservableList<String> buyOperatorarray = FXCollections.observableArrayList();
@@ -85,5 +94,14 @@ public class controller{
         this.buyOperatorarray.add("<");
         this.buyOperatorarray.add("=");
         this.buyOperatorarray.add(">");
+    }
+    public void getAlldata(){
+     this.valuetimezone = (String) this.Timezonemenu.getValue();
+     this.valuebuyoption1 = (String)this.buyOption.getValue();
+     this.valuebuyoperator = (String)this.buyOperator.getValue();
+     this.valuebuyoption2 = (String)this.buyoption2.getValue();
+     this.valueselloption1 = (String) this.selloption.getValue();
+     this.valueselloperator = (String)this.selloperator.getValue();
+     this.valueselloption2 = (String)this.selloption2.getValue();
     }
 }
