@@ -4,7 +4,6 @@ public class Condition {
         this.option1 = option1;
         this.operator = operator;
         this.option2 = option2;
-
     }
     public String option1 = "0";
     public String option2 = "0";
