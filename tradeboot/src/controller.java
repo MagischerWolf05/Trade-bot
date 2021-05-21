@@ -1,5 +1,6 @@
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -29,7 +30,9 @@ public class controller{
     @FXML
     Label PositionSizing;
     @FXML
-    Label stoploos;
+    Label stoploss;
+    @FXML
+    Button calculate;
 
     String valuetimezone = "";
     String valuebuyoption1 = "";
@@ -61,6 +64,17 @@ public class controller{
     selloption.getItems().addAll(this.optionarray);
     selloption2.getItems().addAll(this.optionarray);
 
+        calculate.setOnAction((ActionEvent event) -> {
+            this.getAlldata();
+            //alles erstellen
+            //Condition buyCondition = new Condition(this.valuebuyoption1,this.valuebuyoperator,this.valuebuyoption2);
+            //Condition sellCondition = new Condition(this.valueselloption1,this.valueselloperator,this.valueselloption2);
+            Condition buyCondition = new Condition("Preis","<","Avg Preis 24H");
+            Condition sellCondition = new Condition("Preis", ">","Avg Preis 24H");
+            Strategy strat = new Strategy(buyCondition,sellCondition,"10%","10%");
+            StrategyTester tester = new StrategyTester(strat,100.0);
+
+        });
     }
 
     public void AddTimeZone(){
@@ -70,6 +84,7 @@ public class controller{
     }
     public void Optiondropdown()
     {
+        this.optionarray.add("Preis");
         this.optionarray.add("14 Day RSI");
         this.optionarray.add("Avg Preis Stunde");
         this.optionarray.add("Avg Preis 5 Stunden");

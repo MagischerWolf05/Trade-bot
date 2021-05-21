@@ -1,4 +1,5 @@
 public class Strategy {
+    //Vielleicht später noch mehr conditions
     public Condition buyCondition;
     public Condition sellCondition;
 
