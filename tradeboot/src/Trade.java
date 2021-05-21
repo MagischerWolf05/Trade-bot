@@ -7,7 +7,7 @@ public class Trade {
     public Double soldPrice;
     public LocalDateTime soldDate;
 
-    Trade(LocalDateTime buyDate Double buyPrice){
+    Trade(LocalDateTime buyDate, Double buyPrice){
         this.buyPrice = buyPrice;
         this.buyDate = buyDate;
     }
