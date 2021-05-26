@@ -9,6 +9,9 @@ import java.util.TimeZone;
 
 
 public class controller{
+
+
+
     @FXML
     ComboBox Timezonemenu;
     @FXML
@@ -26,11 +29,11 @@ public class controller{
     @FXML
     ComboBox stock;
     @FXML
-    Label Balance;
+    TextField balance;
     @FXML
-    Label PositionSizing;
+    TextField stoploss;
     @FXML
-    Label stoploss;
+    TextField positionssizing;
     @FXML
     Button calculate;
 
@@ -41,6 +44,9 @@ public class controller{
     String valueselloption1 = "";
     String valueselloperator = "";
     String valueselloption2 = "";
+    String balancevalue = "";
+    String positionssizingvalue = "";
+    String stoplossvalue = "";
     // ComboBox stock;
 
     ObservableList<String> timezonearray = FXCollections.observableArrayList();
@@ -118,5 +124,11 @@ public class controller{
      this.valueselloption1 = (String) this.selloption.getValue();
      this.valueselloperator = (String)this.selloperator.getValue();
      this.valueselloption2 = (String)this.selloption2.getValue();
+     this.balancevalue = balance.getText();
+     this.positionssizingvalue = positionssizing.getText();
+     this.stoplossvalue = stoploss.getText();
+
+
+
     }
 }
