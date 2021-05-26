@@ -88,7 +88,7 @@ public class controller{
             Condition buyCondition = new Condition( valuebuyoption1,valuebuyoperator,valuebuyoption1);
             Condition sellCondition = new Condition(valueselloption1,valueselloperator,valueselloption2);
             Strategy strat = new Strategy(buyCondition,sellCondition,stoplossvalue,positionssizingvalue);
-            tester = new StrategyTester(strat,100.0);
+            tester = new StrategyTester(strat,100.0,this.stockValue);
             try {
                 openWindow();
             } catch (IOException e) {

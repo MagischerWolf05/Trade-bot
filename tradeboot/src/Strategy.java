@@ -3,7 +3,7 @@ public class Strategy {
     public Condition buyCondition;
     public Condition sellCondition;
 
-    public int stopLoss;
+    public Double stopLoss;
     //true = % false = Dollar
     public boolean stopLossType;
 
@@ -20,7 +20,7 @@ public class Strategy {
         else if(StopLoss.endsWith("%")){
             this.stopLossType = true;
         }
-        this.stopLoss =Integer.parseInt( StopLoss.substring(0,StopLoss.length()-1) );
+        this.stopLoss =Double.parseDouble( StopLoss.substring(0,StopLoss.length()-1) );
 
         if(Positionsizing.endsWith("$")){
             this.positionSizingDollar = true;

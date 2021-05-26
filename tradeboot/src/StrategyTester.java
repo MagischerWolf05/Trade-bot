@@ -32,6 +32,7 @@ public class StrategyTester {
         this.accessibleBalance = balance;
         this.initialBalance = balance;
         this.strategy = strat;
+        this.stock = stock;
 
         this.loadData();
 
