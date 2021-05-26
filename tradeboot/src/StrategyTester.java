@@ -56,16 +56,21 @@ public class StrategyTester {
                 String sellOption2NodeContentIndex =  getNodeContentIndex(this.strategy.sellCondition.option2);
                 String priceNodeContentIndex = getNodeContentIndex("Preis");
 
-                Double price =(Double) priceNode.get(priceNodeContentIndex);
+                Double price =Double.parseDouble((String) priceNode.get(priceNodeContentIndex)) ;
 
 
 
-                boolean sell = this.strategy.sellCondition.achieved( (Double)sellOption1Node.get(sellOption1NodeContentIndex) , (Double)sellOption2Node.get(sellOption2NodeContentIndex) );
+                boolean sell = this.strategy.sellCondition.achieved(Double.parseDouble((String)sellOption1Node.get(sellOption1NodeContentIndex)) , Double.parseDouble((String)sellOption2Node.get(sellOption2NodeContentIndex)) );
                 if(sell){
-                    for (Trade trade:this.outstandingTrades) {
+                    for (int i = 0;i < this.outstandingTrades.size(); i++) {
+                        Trade trade = this.outstandingTrades.get(i);
                         trade.close(timeIndex,price);
                         this.balance += trade.getProfit(false,0.0);
                         this.accessibleBalance += trade.getProfit(false,0.0);
+
+                        this.trades.add(trade);
+                        this.outstandingTrades.remove(i);
+                        i--;
                     }
                 }
 
@@ -79,11 +84,15 @@ public class StrategyTester {
                         //gets dollar profit amount at closed price
                         this.balance += trade.getProfit(false,0.0);
                         this.accessibleBalance += trade.getProfit(false,0.0);
+
+                        this.trades.add(trade);
+                        this.outstandingTrades.remove(i);
+                        i--;
                     }
                 }
                 //this.balance ist die Balance total also balance in Trades und freie balance also totaler Wert
                 this.updateFluidBalance(price);
-                boolean buy = this.strategy.buyCondition.achieved((Double)buyOption1Node.get(buyOption1NodeContentIndex),(Double)buyOption2Node.get(buyOption2NodeContentIndex));
+                boolean buy = this.strategy.buyCondition.achieved(Double.parseDouble((String)buyOption1Node.get(buyOption1NodeContentIndex)) ,Double.parseDouble((String)buyOption2Node.get(buyOption2NodeContentIndex)) );
                 if(buy){
                     //hier kaufen
                     Double positionSize;
@@ -93,9 +102,11 @@ public class StrategyTester {
                     else {
                         positionSize = (this.balance / 100) * this.strategy.positionSizing;
                     }
-                    //accessible balance ist das geld nicht in Trades
-                    this.accessibleBalance -= positionSize;
+
+
                     if(this.accessibleBalance - positionSize >= 0){
+                        //accessible balance ist das geld nicht in Trades
+                        this.accessibleBalance -= positionSize;
                         this.outstandingTrades.add(new Trade(timeIndex,price,positionSize));
                     }
                 }
@@ -107,8 +118,14 @@ public class StrategyTester {
                     for (int i = 0;i < this.outstandingTrades.size(); i++) {
                         Trade trade = this.outstandingTrades.get(i);
                         trade.close(timeIndex,price);
+
+                        //gets dollar profit amount at closed price
+                        this.balance += trade.getProfit(false,0.0);
+                        this.accessibleBalance += trade.getProfit(false,0.0);
+
                         this.trades.add(trade);
                         this.outstandingTrades.remove(i);
+                        i--;
                     }
                 }
 
