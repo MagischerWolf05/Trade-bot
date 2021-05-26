@@ -109,6 +109,7 @@ public class controller{
         stocksarray.add("MSFT");
         stocksarray.add("GME");
         stocksarray.add("GOOGL");
+        stocksarray.add("IBM");
 
     }
     public void Optiondropdown()
