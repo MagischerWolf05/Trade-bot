@@ -5,12 +5,15 @@ public class Condition {
 
         this.operator = operator;
         this.option2 = option2;
+        //mabe parsen und dann einen boolean als property der "numeric" heisst umsetzen also auf true
     }
     public String option1 = "0";
     public String option2 = "0";
     public String operator = "=";
     //im achieved die Daten reingeben
     public boolean achieved(Double option1Value,Double option2Value){
+        //Wenn numeric ist dann den value selber nehmen
+        //optionValue argument ist ja dann eh null wenn es das nicht findet in den Daten.
         Double option1val = option1Value;
         Double option2val = option2Value;
         if(this.operator == "="){
