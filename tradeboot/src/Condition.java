@@ -9,6 +9,8 @@ public class Condition {
     }
     public String option1 = "0";
     public String option2 = "0";
+    public boolean isOption1Numeric = false;
+    public boolean isOption2Numeric = false;
     public String operator = "=";
     //im achieved die Daten reingeben
     public boolean achieved(Double option1Value,Double option2Value){
@@ -16,6 +18,14 @@ public class Condition {
         //optionValue argument ist ja dann eh null wenn es das nicht findet in den Daten.
         Double option1val = option1Value;
         Double option2val = option2Value;
+        //Wenn es eine Nummer ist muss es mit .0 geschrieben werden unbedingt
+        if (isOption1Numeric){
+            option1val =Double.parseDouble(this.option1);
+        }
+        if(isOption2Numeric){
+            option2val = Double.parseDouble(this.option2);
+        }
+
         if(this.operator == "="){
             return option1val == option2val;
         }

@@ -3,13 +3,15 @@ import java.time.LocalDateTime;
 public class Trade {
     public Double buyPrice;
     public LocalDateTime buyDate;
-    public boolean win;
+    public boolean win = false;
     public Double soldPrice;
     public LocalDateTime soldDate;
+    public Double size;
 
-    Trade(LocalDateTime buyDate, Double buyPrice){
+    Trade(LocalDateTime buyDate, Double buyPrice,Double size){
         this.buyPrice = buyPrice;
         this.buyDate = buyDate;
+        this.size = size;
     }
     public Double getProfit(boolean percent, double price){
         //wenn abgeschlossen
@@ -18,16 +20,15 @@ public class Trade {
                 return this.soldPrice / this.buyPrice * 100;
             }
             else {
-                return this.soldPrice - this.buyPrice;
+                return (this.soldPrice / this.buyPrice) * size;
             }
 
         }
         if(percent){
-            //vlt noch kürzen
-            return (price / this.buyPrice) * 100;
+            return price / this.buyPrice * 100;
         }
         else {
-            return price - this.buyPrice;
+            return (price / this.buyPrice) * size;
         }
     }
 

@@ -12,19 +12,22 @@ import java.util.*;
 
 public class StrategyTester {
     //public boolean tester = false;
-    public String StockDataFolder = "G:\\Sigren\\Trade-bot\\tradeboot\\src\\StockData\\";
+    public String StockDataFolder = "C:\\Users\\Remo Wälchli\\OneDrive - bbw.ch\\ZLI\\Wochen\\Trade-bot\\tradeboot\\src\\StockData\\";
     public String interval = "15min";
     public ArrayList<String> apiKeys = new ArrayList<String>(Arrays.asList("R7JDRYCEZE5HRLMO","CSJTLGI49VWMSGST")) ;
     public HashMap<String,JSONObject> data = new HashMap<String,JSONObject>();
+    public HashMap<LocalDateTime,Double> balanceHistory = new HashMap<LocalDateTime,Double>();
 
+    public Double accessibleBalance;
     public Double balance;
     public Strategy strategy;
 
-    public ArrayList<Trade> Trades = new ArrayList<Trade>();
+    public ArrayList<Trade> trades = new ArrayList<Trade>();
     public ArrayList<Trade> outstandingTrades = new ArrayList<Trade>();
 
     StrategyTester(Strategy strat, Double balance){
         this.balance = balance;
+        this.accessibleBalance = balance;
         this.strategy = strat;
 
         this.loadData();
@@ -37,36 +40,91 @@ public class StrategyTester {
         while (!finished){
             //interval
             timeIndex.plusMinutes(15);
-
+            balanceHistory.put(timeIndex,this.balance);
             //formatTimeIndex gibt
             JSONObject buyOption1Node = getNodeByTime(timeIndex,this.strategy.buyCondition.option1);
-            String buyOption1NodeContentIndex =  getNodeContentIndex(this.strategy.buyCondition.option1);
-
             JSONObject buyOption2Node = getNodeByTime(timeIndex,this.strategy.buyCondition.option2);
-            String buyOption2NodeContentIndex =  getNodeContentIndex(this.strategy.buyCondition.option2);
-
             JSONObject sellOption1Node = getNodeByTime(timeIndex,this.strategy.sellCondition.option1);
-            String sellOption1NodeContentIndex =  getNodeContentIndex(this.strategy.sellCondition.option1);
-
             JSONObject sellOption2Node = getNodeByTime(timeIndex,this.strategy.sellCondition.option2);
-            String sellOption2NodeContentIndex =  getNodeContentIndex(this.strategy.sellCondition.option2);
+            JSONObject priceNode = getNodeByTime(timeIndex,"Preis");
 
-            if(buyOption1Node != null && buyOption2Node != null && sellOption1Node != null && sellOption2Node != null){
+            if(buyOption1Node != null && buyOption2Node != null && sellOption1Node != null && sellOption2Node != null && priceNode != null){
+
+                String buyOption1NodeContentIndex =  getNodeContentIndex(this.strategy.buyCondition.option1);
+                String buyOption2NodeContentIndex =  getNodeContentIndex(this.strategy.buyCondition.option2);
+                String sellOption1NodeContentIndex =  getNodeContentIndex(this.strategy.sellCondition.option1);
+                String sellOption2NodeContentIndex =  getNodeContentIndex(this.strategy.sellCondition.option2);
+                String priceNodeContentIndex = getNodeContentIndex("Preis");
+
+                Double price =(Double) priceNode.get(priceNodeContentIndex);
+
+
+
+                boolean sell = this.strategy.sellCondition.achieved( (Double)sellOption1Node.get(sellOption1NodeContentIndex) , (Double)sellOption2Node.get(sellOption2NodeContentIndex) );
+                if(sell){
+                    for (Trade trade:this.outstandingTrades) {
+                        trade.close(timeIndex,price);
+                        this.balance += trade.getProfit(false,0.0);
+                        this.accessibleBalance += trade.getProfit(false,0.0);
+                    }
+                }
+
+                //stop loss auch noch machen omg;
+                for (int i = 0; i<this.outstandingTrades.size();i++) {
+                    Trade trade = this.outstandingTrades.get(i);
+                    //profit in percentage oder Dollar je nachdem
+                    Double profit = trade.getProfit(this.strategy.stopLossType,price);
+                    if (profit<= this.strategy.stopLoss){
+                        trade.close(timeIndex,price);
+                        //gets dollar profit amount at closed price
+                        this.balance += trade.getProfit(false,0.0);
+                        this.accessibleBalance += trade.getProfit(false,0.0);
+                    }
+                }
+                //this.balance ist die Balance total also balance in Trades und freie balance also totaler Wert
+                this.updateFluidBalance(price);
+                boolean buy = this.strategy.buyCondition.achieved((Double)buyOption1Node.get(buyOption1NodeContentIndex),(Double)buyOption2Node.get(buyOption2NodeContentIndex));
+                if(buy){
+                    //hier kaufen
+                    Double positionSize;
+                    if(this.strategy.positionSizingDollar){
+                        positionSize = this.strategy.positionSizing;
+                    }
+                    else {
+                        positionSize = (this.balance / 100) * this.strategy.positionSizing;
+                    }
+                    //accessible balance ist das geld nicht in Trades
+                    this.accessibleBalance -= positionSize;
+                    if(this.accessibleBalance - positionSize >= 0){
+                        this.outstandingTrades.add(new Trade(timeIndex,price,positionSize));
+                    }
+                }
+
+
+
+                if(timeIndex.equals(end)){
+                    finished = true;
+                    for (int i = 0;i < this.outstandingTrades.size(); i++) {
+                        Trade trade = this.outstandingTrades.get(i);
+                        trade.close(timeIndex,price);
+                        this.trades.add(trade);
+                        this.outstandingTrades.remove(i);
+                    }
+                }
+
                 //wenn profit ist dann von outstanding trades
                 //this.strategy.buyCondition.achieved(buyOption1Node,buyOption2Node);
                 //UNBEDINGT DISTINCTION MACHEN OB VALUE ODER OB OPTION
                 //IN CONDITION KLASSE SELBER UND IN
                 //Maybe auch Profit als option bei Sell
                 //hier wird trade gemacht
+
+
+                //Wenn sold bei accessibleBalance und bei Balance profit hinzufügen
+                //wenn ende ist dann sellt es alles;
             }
 
-
-
-
         }
-        //auch testen ob daten fehlen also wenn ein optionValue falsch ist dann einfach überspringen
-
-
     }
 
     public void loadData(){
@@ -76,6 +134,7 @@ public class StrategyTester {
         functions.put(this.strategy.sellCondition.option2,getAPIFunction(this.strategy.sellCondition.option2));
         functions.put(this.strategy.buyCondition.option1,getAPIFunction(this.strategy.sellCondition.option1));
         functions.put(this.strategy.buyCondition.option2,getAPIFunction(this.strategy.buyCondition.option2));
+        functions.put("Preis",getAPIFunction("Preis"));
         //removes same ones
         for (int i = 0;i < functions.size();i++) {
             String condition = functions.get(i);
@@ -200,9 +259,6 @@ public class StrategyTester {
                     String formattedTimeIndex = timeIndex.format(myFormatObj);
                     String index = formattedTimeIndex;
 
-                    if(index.equals("2021-04-09 06:45")){
-                        int c = 2;
-                    }
 
                     JSONObject meta =(JSONObject) data.getValue().get("Meta Data");
                     String timelineIndex = this.getDataIndexFromIndicator(data.getKey());
@@ -247,6 +303,12 @@ public class StrategyTester {
             }
         }
         return null;
+    }
+
+    public void updateFluidBalance(Double price){
+        for (Trade trade:this.outstandingTrades) {
+            this.balance += trade.getProfit(false,price);
+        }
     }
 
     public JSONObject APIcall(String URLString){
