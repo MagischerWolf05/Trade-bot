@@ -12,7 +12,7 @@ import java.util.*;
 
 public class StrategyTester {
     //public boolean tester = false;
-    public String StockDataFolder = "C:\\Users\\Remo Wälchli\\OneDrive - bbw.ch\\ZLI\\Wochen\\Trade-bot\\tradeboot\\src\\StockData\\";
+    public String StockDataFolder = "G:\\Sigren\\Trade-bot\\tradeboot\\src\\StockData\\";
     public String interval = "15min";
     public ArrayList<String> apiKeys = new ArrayList<String>(Arrays.asList("R7JDRYCEZE5HRLMO","CSJTLGI49VWMSGST")) ;
     public HashMap<String,JSONObject> data = new HashMap<String,JSONObject>();

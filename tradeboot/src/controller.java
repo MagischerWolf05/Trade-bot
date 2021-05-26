@@ -3,8 +3,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.util.TimeZone;
 
 
@@ -52,14 +59,16 @@ public class controller{
     ObservableList<String> timezonearray = FXCollections.observableArrayList();
     ObservableList<String> optionarray = FXCollections.observableArrayList();
     ObservableList<String> buyOperatorarray = FXCollections.observableArrayList();
+    ObservableList<String> stocksarray = FXCollections.observableArrayList();
 
     String buyoptionstring = "";
     String selloptionstring = "";
-
+    StrategyTester tester = null;
     public void initialize() {
     compareOption();
     AddTimeZone();
     Optiondropdown();
+    stocksoption();
     buyoption2options();
     selloption2options();
     buyOperator.getItems().addAll(this.buyOperatorarray);
@@ -69,7 +78,7 @@ public class controller{
     buyoption2.getItems().addAll(this.optionarray);
     selloption.getItems().addAll(this.optionarray);
     selloption2.getItems().addAll(this.optionarray);
-
+    stock.getItems().addAll(this.stocksarray);
         calculate.setOnAction((ActionEvent event) -> {
             this.getAlldata();
             //alles erstellen
@@ -78,8 +87,12 @@ public class controller{
             Condition buyCondition = new Condition("Preis","<","Avg Preis 24H");
             Condition sellCondition = new Condition("Preis", ">","Avg Preis 24H");
             Strategy strat = new Strategy(buyCondition,sellCondition,"10$","10$");
-            StrategyTester tester = new StrategyTester(strat,100.0);
-
+            tester = new StrategyTester(strat,100.0);
+            try {
+                openWindow();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -87,6 +100,15 @@ public class controller{
         for (int i = 0; i < TimeZone.getAvailableIDs().length; i++) {
             this.timezonearray.add(TimeZone.getAvailableIDs()[i]);
         }
+    }
+    public void stocksoption(){
+        stock.setEditable(true);
+        stocksarray.add("AAPL");
+        stocksarray.add("AMD");
+        stocksarray.add("MSFT");
+        stocksarray.add("GME");
+        stocksarray.add("GOOGL");
+
     }
     public void Optiondropdown()
     {
@@ -130,5 +152,24 @@ public class controller{
 
 
 
+    }
+    public void openWindow() throws IOException {
+
+
+
+
+
+     try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("auswertung.fxml"));
+            Auswertung controller = new Auswertung(this.tester);
+             fxmlLoader.setController(controller);
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("ABC");
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

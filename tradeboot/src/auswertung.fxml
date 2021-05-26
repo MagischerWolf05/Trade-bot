@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="400.0" prefWidth="800.0">
+         <children>
+            <HBox prefHeight="150.0" prefWidth="800.0">
+               <children>
+                  <Label fx:id="profit" text="12314">
+                     <graphic>
+                        <Label text="profit">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
+                     </graphic>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="100.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="winingtrade" text="12314">
+                     <graphic>
+                        <Label text="Wining Trades">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
+                     </graphic>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="100.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lossingtrade" layoutX="110.0" layoutY="20.0" text="12314">
+                     <graphic>
+                        <Label text="Loosing Trades">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
+                     </graphic>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="100.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="250.0">
+                     <children>
+                        <Label fx:id="moneymade" text="12332">
+                           <graphic>
+                              <Label text="Money Made" />
+                           </graphic>
+                        </Label>
+                        <Label fx:id="profittrade" layoutX="10.0" layoutY="10.0" text="12332">
+                           <graphic>
+                              <Label text="Profitability per Trade" />
+                           </graphic>
+                        </Label>
+                        <Label fx:id="gain" layoutX="10.0" layoutY="10.0" text="12332">
+                           <graphic>
+                              <Label text="Biggest Gain" />
+                           </graphic>
+                        </Label>
+                        <Label fx:id="loss" layoutX="10.0" layoutY="10.0" text="12332">
+                           <graphic>
+                              <Label text="Biggest Loss" />
+                           </graphic>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children></HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
