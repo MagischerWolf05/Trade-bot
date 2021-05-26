@@ -84,9 +84,9 @@ public class controller{
             //alles erstellen
             //Condition buyCondition = new Condition(this.valuebuyoption1,this.valuebuyoperator,this.valuebuyoption2);
             //Condition sellCondition = new Condition(this.valueselloption1,this.valueselloperator,this.valueselloption2);
-            Condition buyCondition = new Condition("Preis","<","Avg Preis 24H");
-            Condition sellCondition = new Condition("Preis", ">","Avg Preis 24H");
-            Strategy strat = new Strategy(buyCondition,sellCondition,"10$","10$");
+            Condition buyCondition = new Condition( valuebuyoption1,valuebuyoperator,valuebuyoption1);
+            Condition sellCondition = new Condition(valueselloption1,valueselloperator,valueselloption2);
+            Strategy strat = new Strategy(buyCondition,sellCondition,stoplossvalue,positionssizingvalue);
             tester = new StrategyTester(strat,100.0);
             try {
                 openWindow();
