@@ -27,7 +27,7 @@
                               <ComboBox fx:id="buyOption" prefWidth="150.0" promptText="Option" />
                               <ComboBox fx:id="buyOperator" prefWidth="150.0" promptText="&lt;,=,&gt;" />
                               <ComboBox fx:id="buyoption2" prefWidth="150.0" promptText="Option2" />
-                              <TextField fx:id="balance" text="Balance" />
+                              <TextField fx:id="balance" />
                            </children>
                         </HBox>
                      </children>
@@ -70,13 +70,13 @@
                         </HBox>
                         <HBox prefHeight="82.0" prefWidth="323.0">
                            <children>
-                              <TextField fx:id="stoploss" text="\$,%" />
+                              <TextField fx:id="stoploss" />
                               <ComboBox fx:id="stock" prefWidth="150.0" promptText="Stock">
                                  <HBox.margin>
                                     <Insets left="150.0" />
                                  </HBox.margin>
                               </ComboBox>
-                              <TextField fx:id="positionssizing" layoutX="10.0" layoutY="10.0" text="\$,%">
+                              <TextField fx:id="positionssizing" layoutX="10.0" layoutY="10.0">
                                  <HBox.margin>
                                     <Insets left="100.0" />
                                  </HBox.margin>
