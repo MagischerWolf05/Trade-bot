@@ -33,7 +33,7 @@ public class Condition {
             return option1val < option2val;
         }
         else if(this.operator == ">"){
-            return option1val < option2val;
+            return option1val > option2val;
         }
         //Sollte nicht hier rankommen
         return false;

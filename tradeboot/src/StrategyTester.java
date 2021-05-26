@@ -20,6 +20,7 @@ public class StrategyTester {
 
     public Double accessibleBalance;
     public Double balance;
+    public Double initialBalance;
     public Strategy strategy;
 
     public ArrayList<Trade> trades = new ArrayList<Trade>();
@@ -28,6 +29,7 @@ public class StrategyTester {
     StrategyTester(Strategy strat, Double balance){
         this.balance = balance;
         this.accessibleBalance = balance;
+        this.initialBalance = balance;
         this.strategy = strat;
 
         this.loadData();
@@ -61,11 +63,10 @@ public class StrategyTester {
 
 
                 boolean sell = this.strategy.sellCondition.achieved(Double.parseDouble((String)sellOption1Node.get(sellOption1NodeContentIndex)) , Double.parseDouble((String)sellOption2Node.get(sellOption2NodeContentIndex)) );
-                if(sell){
+                if(sell && this.outstandingTrades.size() != 0){
                     for (int i = 0;i < this.outstandingTrades.size(); i++) {
                         Trade trade = this.outstandingTrades.get(i);
                         trade.close(timeIndex,price);
-                        this.balance += trade.getProfit(false,0.0);
                         this.accessibleBalance += trade.getProfit(false,0.0);
 
                         this.trades.add(trade);
@@ -74,15 +75,14 @@ public class StrategyTester {
                     }
                 }
 
-                //stop loss auch noch machen omg;
+                //stop loss
                 for (int i = 0; i<this.outstandingTrades.size();i++) {
                     Trade trade = this.outstandingTrades.get(i);
                     //profit in percentage oder Dollar je nachdem
                     Double profit = trade.getProfit(this.strategy.stopLossType,price);
-                    if (profit<= this.strategy.stopLoss){
+                    if (profit <= (this.strategy.stopLoss * -1) ){
                         trade.close(timeIndex,price);
                         //gets dollar profit amount at closed price
-                        this.balance += trade.getProfit(false,0.0);
                         this.accessibleBalance += trade.getProfit(false,0.0);
 
                         this.trades.add(trade);
@@ -90,8 +90,11 @@ public class StrategyTester {
                         i--;
                     }
                 }
+
                 //this.balance ist die Balance total also balance in Trades und freie balance also totaler Wert
                 this.updateFluidBalance(price);
+
+
                 boolean buy = this.strategy.buyCondition.achieved(Double.parseDouble((String)buyOption1Node.get(buyOption1NodeContentIndex)) ,Double.parseDouble((String)buyOption2Node.get(buyOption2NodeContentIndex)) );
                 if(buy){
                     //hier kaufen
@@ -119,7 +122,6 @@ public class StrategyTester {
                         trade.close(timeIndex,price);
 
                         //gets dollar profit amount at closed price
-                        this.balance += trade.getProfit(false,0.0);
                         this.accessibleBalance += trade.getProfit(false,0.0);
 
                         this.trades.add(trade);
@@ -128,16 +130,6 @@ public class StrategyTester {
                     }
                 }
 
-                //wenn profit ist dann von outstanding trades
-                //this.strategy.buyCondition.achieved(buyOption1Node,buyOption2Node);
-                //UNBEDINGT DISTINCTION MACHEN OB VALUE ODER OB OPTION
-                //IN CONDITION KLASSE SELBER UND IN
-                //Maybe auch Profit als option bei Sell
-                //hier wird trade gemacht
-
-
-                //Wenn sold bei accessibleBalance und bei Balance profit hinzufügen
-                //wenn ende ist dann sellt es alles;
             }
 
         }
@@ -325,6 +317,14 @@ public class StrategyTester {
         for (Trade trade:this.outstandingTrades) {
             this.balance += trade.getProfit(false,price);
         }
+    }
+
+    public void updateAccessibleBalance(){
+        Double balance = 0.0;
+        for (Trade trade: this.outstandingTrades){
+            balance += trade.size;
+        }
+        this.accessibleBalance = balance;
     }
 
     public JSONObject APIcall(String URLString){

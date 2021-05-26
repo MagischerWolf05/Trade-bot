@@ -77,7 +77,7 @@ public class controller{
             //Condition sellCondition = new Condition(this.valueselloption1,this.valueselloperator,this.valueselloption2);
             Condition buyCondition = new Condition("Preis","<","Avg Preis 24H");
             Condition sellCondition = new Condition("Preis", ">","Avg Preis 24H");
-            Strategy strat = new Strategy(buyCondition,sellCondition,"10%","10%");
+            Strategy strat = new Strategy(buyCondition,sellCondition,"10$","10$");
             StrategyTester tester = new StrategyTester(strat,100.0);
 
         });

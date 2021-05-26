@@ -20,7 +20,7 @@ public class Strategy {
         else if(StopLoss.endsWith("%")){
             this.stopLossType = true;
         }
-        this.stopLoss =Integer.parseInt( StopLoss.substring(0,StopLoss.length()-2) );
+        this.stopLoss =Integer.parseInt( StopLoss.substring(0,StopLoss.length()-1) );
 
         if(Positionsizing.endsWith("$")){
             this.positionSizingDollar = true;
@@ -29,7 +29,7 @@ public class Strategy {
             this.positionSizingDollar = false;
         }
         //Testen
-        this.positionSizing =Double.parseDouble( Positionsizing.substring(0,StopLoss.length()-2) );
+        this.positionSizing =Double.parseDouble( Positionsizing.substring(0,StopLoss.length()-1) );
 
     }
 }

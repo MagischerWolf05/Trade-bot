@@ -17,18 +17,18 @@ public class Trade {
         //wenn abgeschlossen
         if(this.soldDate != null && this.soldPrice != null){
             if(percent){
-                return this.soldPrice / this.buyPrice * 100;
+                return (this.soldPrice / this.buyPrice * 100) -100;
             }
             else {
-                return (this.soldPrice / this.buyPrice) * size;
+                return (price * this.size / this.buyPrice) -this.size;
             }
 
         }
         if(percent){
-            return price / this.buyPrice * 100;
+            return (price / this.buyPrice * 100) -100;
         }
         else {
-            return (price / this.buyPrice) * size;
+            return (price * this.size / this.buyPrice) - this.size;
         }
     }
 
