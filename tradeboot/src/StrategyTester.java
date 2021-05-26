@@ -12,7 +12,7 @@ import java.util.*;
 
 public class StrategyTester {
     //public boolean tester = false;
-    public String StockDataFolder = "G:\\Sigren\\Trade-bot\\tradeboot\\src\\StockData\\";
+    public String StockDataFolder = "C:\\Users\\Remo Wälchli\\OneDrive - bbw.ch\\ZLI\\Wochen\\Trade-bot\\tradeboot\\src\\StockData\\";
     public String interval = "15min";
     public ArrayList<String> apiKeys = new ArrayList<String>(Arrays.asList("R7JDRYCEZE5HRLMO","CSJTLGI49VWMSGST")) ;
     public HashMap<String,JSONObject> data = new HashMap<String,JSONObject>();
@@ -298,20 +298,10 @@ public class StrategyTester {
                         int a = 2;
                     }
 
-                    //indicator holen und dann die Datenwerte / Timeline holen
 
-                    //dataObject.get("Meta Data").get("2: Indicator");
-                    // das zwischen den Klammen holen und dann "Technical Analysis: " + dasZwischenDenKlammen
-
-                    //oder halt Time Series (dasWasInMetaDataStehtInterval) wenn es kein indicator gibt in Meta Data
-
-                    //timeline mit timeindex Tag holen wenn in Metadata Interval daily ist
-                    //Timeline mit timeIndex holen.
                 }
                 matched = true;
                 return timeIndex;
-                //hier ist timeline gefunden von allen
-                //cutoff vor dieser zeit um durch zu cyclen dass alle gleich beginnen
             }
             catch (Exception e){
                 e.toString();
@@ -449,6 +439,11 @@ public class StrategyTester {
         if(meta.get("1. Information") != null && ((String)meta.get("1. Information")).startsWith("Intraday") ){
             myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             nodeIndex= unformatted.format(myFormatObj);
+        }
+
+        if(option.equals("Avg Preis Stunde")){
+            myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            nodeIndex = unformatted.format(myFormatObj);
         }
 
         return (JSONObject) timeline.get(nodeIndex);

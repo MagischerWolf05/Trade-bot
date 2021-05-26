@@ -163,7 +163,7 @@ public class controller{
 
 
      try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("auswertung.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("C:\\Users\\Remo Wälchli\\OneDrive - bbw.ch\\ZLI\\Wochen\\Trade-bot\\tradeboot\\src\\auswertung.fxml"));
             Auswertung controller = new Auswertung(this.tester);
              fxmlLoader.setController(controller);
             Parent root1 = (Parent) fxmlLoader.load();
