@@ -39,7 +39,7 @@ public class StrategyTester {
         boolean finished = false;
         while (!finished){
             //interval
-            timeIndex.plusMinutes(15);
+            timeIndex = timeIndex.plusMinutes(15);
             balanceHistory.put(timeIndex,this.balance);
             //formatTimeIndex gibt
             JSONObject buyOption1Node = getNodeByTime(timeIndex,this.strategy.buyCondition.option1);
@@ -102,7 +102,6 @@ public class StrategyTester {
                     else {
                         positionSize = (this.balance / 100) * this.strategy.positionSizing;
                     }
-
 
                     if(this.accessibleBalance - positionSize >= 0){
                         //accessible balance ist das geld nicht in Trades
