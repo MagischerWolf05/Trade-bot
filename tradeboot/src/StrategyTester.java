@@ -67,7 +67,7 @@ public class StrategyTester {
                     for (int i = 0;i < this.outstandingTrades.size(); i++) {
                         Trade trade = this.outstandingTrades.get(i);
                         trade.close(timeIndex,price);
-                        this.accessibleBalance += trade.getProfit(false,0.0);
+                        this.accessibleBalance += trade.getProfit(false,0.0) + trade.size;
 
                         this.trades.add(trade);
                         this.outstandingTrades.remove(i);
@@ -83,7 +83,7 @@ public class StrategyTester {
                     if (profit <= (this.strategy.stopLoss * -1) ){
                         trade.close(timeIndex,price);
                         //gets dollar profit amount at closed price
-                        this.accessibleBalance += trade.getProfit(false,0.0);
+                        this.accessibleBalance += trade.getProfit(false,0.0) + trade.size;
 
                         this.trades.add(trade);
                         this.outstandingTrades.remove(i);
@@ -122,7 +122,7 @@ public class StrategyTester {
                         trade.close(timeIndex,price);
 
                         //gets dollar profit amount at closed price
-                        this.accessibleBalance += trade.getProfit(false,0.0);
+                        this.accessibleBalance += trade.getProfit(false,0.0) + trade.size;
 
                         this.trades.add(trade);
                         this.outstandingTrades.remove(i);
