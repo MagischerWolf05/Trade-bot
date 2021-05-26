@@ -54,6 +54,7 @@ public class controller{
     String balancevalue = "";
     String positionssizingvalue = "";
     String stoplossvalue = "";
+    String stockValue = "";
     // ComboBox stock;
 
     ObservableList<String> timezonearray = FXCollections.observableArrayList();
@@ -146,6 +147,7 @@ public class controller{
      this.valueselloption1 = (String) this.selloption.getValue();
      this.valueselloperator = (String)this.selloperator.getValue();
      this.valueselloption2 = (String)this.selloption2.getValue();
+     this.stockValue = (String)this.stock.getValue();
      this.balancevalue = balance.getText();
      this.positionssizingvalue = positionssizing.getText();
      this.stoplossvalue = stoploss.getText();
