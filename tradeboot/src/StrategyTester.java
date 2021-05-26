@@ -22,11 +22,12 @@ public class StrategyTester {
     public Double balance;
     public Double initialBalance;
     public Strategy strategy;
+    public String stock;
 
     public ArrayList<Trade> trades = new ArrayList<Trade>();
     public ArrayList<Trade> outstandingTrades = new ArrayList<Trade>();
 
-    StrategyTester(Strategy strat, Double balance){
+    StrategyTester(Strategy strat, Double balance,String stock){
         this.balance = balance;
         this.accessibleBalance = balance;
         this.initialBalance = balance;
@@ -93,6 +94,7 @@ public class StrategyTester {
 
                 //this.balance ist die Balance total also balance in Trades und freie balance also totaler Wert
                 this.updateFluidBalance(price);
+                this.updateAccessibleBalance();
 
 
                 boolean buy = this.strategy.buyCondition.achieved(Double.parseDouble((String)buyOption1Node.get(buyOption1NodeContentIndex)) ,Double.parseDouble((String)buyOption2Node.get(buyOption2NodeContentIndex)) );
@@ -132,6 +134,10 @@ public class StrategyTester {
 
             }
 
+        }
+
+        for (Trade trade:this.trades) {
+            System.out.println(trade.getProfit(false,0.0));
         }
     }
 
@@ -175,7 +181,7 @@ public class StrategyTester {
             String url =start +  call.getValue() + "&interval=" + this.interval + apiKeyPrefix + this.apiKeys.get(count % this.apiKeys.size());
             count ++;
             //&symbol=IBM
-            JSONObject data = getData(url,call.getKey(),"IBM");
+            JSONObject data = getData(url,call.getKey(),this.stock);
             this.data.put(call.getKey(),data);
         }
         int i = 0;
@@ -314,9 +320,15 @@ public class StrategyTester {
     }
 
     public void updateFluidBalance(Double price){
+        this.balance = 0.0;
+        for (Trade trade: this.trades){
+            //closed darum 0.0
+            this.balance += trade.getProfit(false,0.0);
+        }
         for (Trade trade:this.outstandingTrades) {
             this.balance += trade.getProfit(false,price);
         }
+        this.balance += this.initialBalance;
     }
 
     public void updateAccessibleBalance(){
@@ -324,7 +336,7 @@ public class StrategyTester {
         for (Trade trade: this.outstandingTrades){
             balance += trade.size;
         }
-        this.accessibleBalance = balance;
+        this.accessibleBalance =this.balance - balance;
     }
 
     public JSONObject APIcall(String URLString){
